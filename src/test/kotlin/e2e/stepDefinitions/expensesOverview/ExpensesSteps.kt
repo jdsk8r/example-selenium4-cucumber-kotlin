@@ -14,13 +14,13 @@ class ExpensesSteps : En {
         Given("that I am on the main page") {
             Browser.vanillaDriver()
                 .navigate()
-                .to(ConfigUtil.getConfig().baseUrl)
+                .to(ConfigUtil.getConfig().getBaseUrl())
         }
         When("I press on add new expense") { ExpensePage().addNewExpenseButton?.click() }
         Then(
             "the form to add expense is visible"
         ) {
-            assertThat(SeleniumUtils.safeIsVisible(NewExpenseForm().newExpenseForm))
+            assertThat(SeleniumUtils.safeIsVisible(NewExpenseForm().newExpenseForm!!))
                 .isTrue()
         }
         Then(
@@ -31,7 +31,7 @@ class ExpensesSteps : En {
         Then(
             "date textbox is below title textbox"
         ) { assertThat(NewExpenseForm().isDateBelowOfTitle()).isTrue() }
-        When("I enter \"{}\" as title") { title : String? ->
+        When("I enter \"{}\" as title") { title : String ->
             NewExpenseForm().newExpenseTitle?.sendKeys(
                 title
             )
@@ -46,12 +46,12 @@ class ExpensesSteps : En {
         ) {
             NewExpenseForm().newExpenseDate?.sendKeys(
                 LocalDateTime.now()
-                    .format(ConfigUtil.getConfig().standardDateFormat)
+                    .format(ConfigUtil.getConfig().getStandardDateFormat())
             )
         }
         When("press on add expense") { NewExpenseForm().addExpense?.click() }
         Then(
             "expense \"{}\" is visible on overview"
-        ) { title : String? -> assertThat(ExpensePage().existExpense(title)).isTrue() }
+        ) { title : String -> assertThat(ExpensePage().existExpense(title)).isTrue() }
     }
 }

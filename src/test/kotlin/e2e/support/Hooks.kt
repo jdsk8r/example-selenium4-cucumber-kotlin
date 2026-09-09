@@ -5,7 +5,6 @@ import e2e.support.config.ConfigUtil
 import io.cucumber.java.After
 import io.cucumber.java.Before
 import io.cucumber.java.Scenario
-import lombok.extern.slf4j.Slf4j
 import no.sanchezrolfsen.framework.selenium.AbstractHooks
 import no.sanchezrolfsen.framework.selenium.Browser
 import no.sanchezrolfsen.framework.selenium.config.BrowserConfig
@@ -17,15 +16,12 @@ import java.time.Duration
 import java.util.logging.Level
 
 
-@Slf4j
 class Hooks: AbstractHooks() {
     companion object: Log()
 
     @Before
-    override fun beforeEach() {
-        if (runBeforeAll) {
-            beforeAll()
-        }
+    fun beforeEachScenario() {
+        super.beforeEach()
     }
 
     override fun beforeAll() {
@@ -33,7 +29,7 @@ class Hooks: AbstractHooks() {
         val stopWatch = StopWatch()
         stopWatch.start()
         try {
-            Browser.init(this.browserConfig)
+            Browser.init(this.getBrowserConfig())
         } catch (ex: Exception) {
             ex.printStackTrace()
             this.unexpectedShutdown("Fail on browser configuration, stopping test-run")
@@ -46,15 +42,12 @@ class Hooks: AbstractHooks() {
 
         Browser.vanillaDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(15))
         log.info("Starting running tests")
-        val logEntries = Browser.vanillaDriver().manage().logs()[LogType.BROWSER]
-        if (logEntries != null) {
-            Browser.jsExecutor().executeScript("console.clear();")
-        }
+        Browser.jsExecutor().executeScript("console.clear();")
         runBeforeAll = false
     }
 
     override fun getBrowserConfig(): BrowserConfig {
-        return ConfigUtil.getConfig().browserConfig
+        return ConfigUtil.getConfig().getBrowserConfig()
     }
 
     @After
@@ -91,7 +84,7 @@ class Hooks: AbstractHooks() {
     }
 
     @After
-    fun tearDown(scenario: Scenario?) {
+    fun tearDown(scenario: Scenario) {
         afterFailedScenario(scenario)
     }
 }

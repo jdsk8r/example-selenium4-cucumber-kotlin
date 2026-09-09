@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
-import java.util.function.Function
-import java.util.function.Predicate
 
 class ExpensePage {
     private val driver : WebDriver? = Browser.vanillaDriver()
@@ -19,10 +17,9 @@ class ExpensePage {
     }
 
     fun existExpense(title : String?) : Boolean {
-        return driver !!.findElements(ExpenseItemComponent().SELECTOR).stream()
+        return driver!!.findElements(ExpenseItemComponent().SELECTOR).stream()
             .map { ExpenseItemComponent() }
             .filter { ei -> ei.getDescription().equals(title) }
-            .toList()
-            .size > 0
+            .toList().isNotEmpty()
     }
 }
