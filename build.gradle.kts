@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 object Versions {
     const val e2eFrameworkVersion = "1.2.4"
     const val seleniumVersion = "4.6.0"
-    const val cucumberVersion = "7.8.1"
+    const val cucumberVersion = "7.34.8"
     const val lombokVersion = "1.18.24"
 }
 
