@@ -8,7 +8,7 @@ object Versions {
 }
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.9.25"
 }
 
 group = "no.sanchezrolfsen.framework.examples"
