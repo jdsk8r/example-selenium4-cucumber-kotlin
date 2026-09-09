@@ -40,7 +40,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.11.0")
     implementation("javax.ws.rs:javax.ws.rs-api:2.1.1")
-    testImplementation("org.junit.platform:junit-platform-runner:1.9.0")
+    testImplementation("org.junit.platform:junit-platform-runner:1.14.4")
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.mockito:mockito-core:4.8.0")
 }
